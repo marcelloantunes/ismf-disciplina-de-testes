@@ -71,4 +71,17 @@ public class SurveyServiceTestIntegration {
         assertEquals(beforeAdding + 1, surveyRepository.count());
     }
 
+    @Test
+    public void shouldAddSurveyWithPrefix () {
+        Survey survey = new Survey("Prefix", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique non augue et mattis. Suspendisse pharetra in sem faucibus aliquam. Curabitur bibendum rutrum dui. Proin mattis magna justo, aliquet placerat eros faucibus eu. Cras finibus sodales justo ac auctor. Vivamus id bibendum metus. Aliquam eros tellus, efficitur quis tempor nec, viverra ut orci. In in ullamcorper arcu. Duis quam eros, aliquet vel quam et, lobortis tempor orci.", "Teste");
+
+        when (surveyRepository.saveAndFlush(survey)).thenReturn(survey);
+
+        Survey surveyIncluded = surveyService.addSurvey(survey);
+        assertNotNull(surveyIncluded());
+        assertEquals("Prefix", surveyIncluded.getPrefix());
+        assertEquals("Prefix", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique non augue et mattis. Suspendisse pharetra in sem faucibus aliquam. Curabitur bibendum rutrum dui. Proin mattis magna justo, aliquet placerat eros faucibus eu. Cras finibus sodales justo ac auctor. Vivamus id bibendum metus. Aliquam eros tellus, efficitur quis tempor nec, viverra ut orci. In in ullamcorper arcu. Duis quam eros, aliquet vel quam et, lobortis tempor orci.", surveyIncluded.getTitle());
+        assertEquals("Teste", surveyIncluded.getDescription());
+    }
+
 }
