@@ -84,4 +84,17 @@ public class SurveyServiceTestIntegration {
         assertEquals("Teste", surveyIncluded.getDescription());
     }
 
+    @Test
+    public void shouldAddSurveyWithNoPrefix () {
+        Survey survey = new Survey(null, "No Prefix", "Teste");
+
+        when (surveyRepository.saveAndFlush(survey)).thenReturn(survey);
+
+        Survey surveyIncluded = surveyService.addSurvey(survey);
+        assertNotNull(surveyIncluded);
+        assertNull(surveyIncluded.getPrefix());
+        assertEquals("No Prefix", surveyIncluded.getTitle());
+        assertEquals("Teste", surveyIncluded.getDescription());
+    }
+
 }
